@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Technical Assessment Documentation (keep private)
+TECHNICAL_ASSESSMENT_TASK.md
+PICSUM_API_REFERENCE.md
