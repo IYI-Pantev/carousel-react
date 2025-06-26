@@ -61,7 +61,6 @@ export const fetchImages = async (
     const data: PixabayApiResponse = await response.json();
     const images: PixabayImage[] = data.hits;
 
-    // Transform to our carousel format
     const carouselImages: CarouselImage[] = images.map((image) => ({
       id: image.id.toString(),
       src: image.webformatURL, // Use 640px version
