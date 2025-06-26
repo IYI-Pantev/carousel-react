@@ -3,7 +3,7 @@ import { fetchImages } from "./utils/imageApi";
 import type { CarouselImage } from "./utils/imageApi";
 
 function App() {
-  const [images, setImages] = useState<CarouselImage[] | null>(null);
+  const [images, setImages] = useState<CarouselImage[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -11,8 +11,8 @@ function App() {
     const loadImages = async () => {
       try {
         setLoading(true);
-        const fetchedImages = await fetchImages(12, 200, 200);
-        setImages(fetchedImages);
+        const result = await fetchImages("casino", 50, 1);
+        setImages(result.images);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load images");
       } finally {
@@ -36,21 +36,26 @@ function App() {
       {error && <div className="text-red-500 text-lg">Error: {error}</div>}
 
       {/* Images grid - temporary display before carousel */}
-      {images && !loading && (
-        <div className="grid grid-cols-4 gap-4 max-w-4xl">
-          {images.map((image) => (
-            <div key={image.id} className="flex flex-col items-center">
-              <img
-                src={image.src}
-                alt={`Photo by ${image.author}`}
-                className="w-full h-auto rounded-lg shadow-md hover:shadow-lg transition-shadow"
-                loading="lazy"
-              />
-              <p className="text-white text-sm mt-2 text-center">
-                by {image.author}
-              </p>
-            </div>
-          ))}
+      {images.length > 0 && !loading && (
+        <div>
+          <p className="text-white text-center mb-4">
+            Loaded {images.length} images - Showing first 4:
+          </p>
+          <div className="grid grid-cols-4 gap-4 max-w-4xl">
+            {images.slice(0, 4).map((image) => (
+              <div key={image.id} className="flex flex-col items-center">
+                <img
+                  src={image.src}
+                  alt={`Photo by ${image.author}`}
+                  className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                  loading="lazy"
+                />
+                <p className="text-white text-sm mt-2 text-center">
+                  by {image.author}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

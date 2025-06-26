@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# .env files
+.env
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -26,3 +29,9 @@ dist-ssr
 # Technical Assessment Documentation (keep private)
 TECHNICAL_ASSESSMENT_TASK.md
 PICSUM_API_REFERENCE.md
+PIXABAY_API_REFERENCE.md
+
+# Environment variables (keep API keys private)
+.env
+.env.local
+.env.production

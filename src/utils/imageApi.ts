@@ -1,14 +1,28 @@
-// Type definitions for Picsum API response
-export interface PicsumImage {
-  id: string;
-  author: string;
-  width: number;
-  height: number;
-  url: string;
-  download_url: string;
+export interface PixabayImage {
+  id: number;
+  pageURL: string;
+  type: string;
+  tags: string;
+  previewURL: string;
+  previewWidth: number;
+  previewHeight: number;
+  webformatURL: string;
+  webformatWidth: number;
+  webformatHeight: number;
+  largeImageURL: string;
+  imageWidth: number;
+  imageHeight: number;
+  user: string;
+  userImageURL: string;
 }
 
-// Type for our processed image data
+interface PixabayApiResponse {
+  total: number;
+  totalHits: number;
+  hits: PixabayImage[];
+}
+
+// Keep this interface for your carousel component
 export interface CarouselImage {
   id: string;
   src: string;
@@ -17,31 +31,49 @@ export interface CarouselImage {
   originalHeight: number;
 }
 
-const BASE_URL = "https://picsum.photos";
+const BASE_URL = "https://pixabay.com/api";
+const PIXABAY_KEY = import.meta.env.VITE_PIXABAY_API_KEY;
 
 export const fetchImages = async (
-  count: number = 12,
-  width: number = 200,
-  height: number = 200
-): Promise<CarouselImage[]> => {
+  query: string = "casino",
+  perPage: number = 50,
+  page: number = 1
+): Promise<{ images: CarouselImage[]; hasMore: boolean }> => {
   try {
+    // Check if API key is available
+    if (!PIXABAY_KEY) {
+      throw new Error(
+        "Pixabay API key not found. Make sure VITE_PIXABAY_API_KEY is set in your .env file"
+      );
+    }
+
     // Fetch the list of available images
-    const response = await fetch(`${BASE_URL}/v2/list?limit=${count}`);
+    const response = await fetch(
+      `${BASE_URL}/?key=${PIXABAY_KEY}&q=${encodeURIComponent(
+        query
+      )}&image_type=photo&per_page=${perPage}&page=${page}&safesearch=true`
+    );
 
     if (!response.ok) {
       throw new Error(`Failed to fetch images: ${response.statusText}`);
     }
 
-    const images: PicsumImage[] = await response.json();
+    const data: PixabayApiResponse = await response.json();
+    const images: PixabayImage[] = data.hits;
 
-    // Transform to our carousel format with custom dimensions
-    return images.map((image) => ({
-      id: image.id,
-      src: `${BASE_URL}/id/${image.id}/${width}/${height}`,
-      author: image.author,
-      originalWidth: image.width,
-      originalHeight: image.height,
+    // Transform to our carousel format
+    const carouselImages: CarouselImage[] = images.map((image) => ({
+      id: image.id.toString(),
+      src: image.webformatURL, // Use 640px version
+      author: image.user,
+      originalWidth: image.imageWidth,
+      originalHeight: image.imageHeight,
     }));
+
+    return {
+      images: carouselImages,
+      hasMore: data.hits.length === perPage,
+    };
   } catch (error) {
     console.error("Error fetching images:", error);
     throw error;
