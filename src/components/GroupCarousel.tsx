@@ -6,7 +6,7 @@ interface GroupCarouselProps {
   initialImages: CarouselImage[];
 }
 
-const GroupCarousel: React.FC<GroupCarouselProps> = ({ initialImages }) => {
+const GroupCarousel = ({ initialImages }: GroupCarouselProps) => {
   const [allImages, setAllImages] = useState<CarouselImage[]>(initialImages);
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [isMoving, setIsMoving] = useState(false);

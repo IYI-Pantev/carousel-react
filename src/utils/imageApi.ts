@@ -63,7 +63,7 @@ export const fetchImages = async (
 
     const carouselImages: CarouselImage[] = images.map((image) => ({
       id: image.id.toString(),
-      src: image.webformatURL, // Use 640px version
+      src: image.webformatURL,
       author: image.user,
       originalWidth: image.imageWidth,
       originalHeight: image.imageHeight,
