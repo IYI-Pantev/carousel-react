@@ -1,54 +1,80 @@
-# React + TypeScript + Vite
+# Infinite Image Carousel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Carousel Demo](./public/carousel.png)
 
-Currently, two official plugins are available:
+## Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This is a modern, responsive infinite image carousel built with React and TypeScript. The carousel features smooth scrolling, drag navigation, and adaptive layouts for both desktop and mobile devices.
 
-## Expanding the ESLint configuration
+## Key Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Infinite Loop**: Seamless navigation that loops endlessly through images
+- **Responsive Design**: Shows 4 images on desktop, 2 on mobile
+- **Touch & Drag Navigation**: Support for mouse drag, touch gestures, and scroll wheel
+- **Performance Optimized**: Handles large image sets (1000+) efficiently
+- **API Integration**: Fetches high-quality images from Pixabay API
+- **Modern UI**: Clean, casino-themed design with smooth animations
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Technologies Used
+
+- **React 19** with TypeScript
+- **Vite** for fast development and building
+- **Tailwind CSS** for styling
+- **Vitest** for testing
+- **Testing Library** for component testing
+
+## Quick Start
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Set up environment variables**
+   Create a `.env` file in the root directory:
+   ```
+   VITE_PIXABAY_API_KEY=your_pixabay_api_key_here
+   ```
+
+3. **Start development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Run tests**
+   ```bash
+   npm test
+   ```
+
+## Testing
+
+The project includes comprehensive tests covering:
+- API integration (fetching 50 images)
+- Responsive layout (4 images on desktop, 2 on mobile)
+- Component rendering and error handling
+
+Run tests with UI:
+```bash
+npm run test:ui
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
 ```
+src/
+├── components/
+│   └── GroupCarousel.tsx    # Main carousel component
+├── utils/
+│   └── imageApi.ts          # API integration utilities
+├── tests/
+│   └── components/          # Test files
+└── App.tsx                  # Main application
+```
+
+## Architecture Highlights
+
+- **Reusable Components**: Modular carousel component that can be easily integrated
+- **Responsive Logic**: Adaptive grid system using Tailwind CSS
+- **Performance**: Lazy loading and efficient image handling
+- **Accessibility**: Proper ARIA labels and keyboard navigation support
+- **Modern React Patterns**: Hooks, TypeScript, and functional components
