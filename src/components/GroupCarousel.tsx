@@ -284,23 +284,13 @@ const GroupCarousel = ({ initialImages }: GroupCarouselProps) => {
               aria-label={`Go to group ${index + 1}`}
             />
           ))}
-          {totalGroups > 10 && (
+          {/* {totalGroups > 10 && (
             <span className="text-white/50 text-xs">...</span>
-          )}
+          )} */}
         </div>
 
         {/* Status info */}
         <div className="text-center text-white/60 text-sm">
-          <p>
-            Group {currentGroupIndex + 1} of {totalGroups} • Images{" "}
-            {currentGroupIndex * imagesPerGroup + 1}-
-            {Math.min(
-              (currentGroupIndex + 1) * imagesPerGroup,
-              allImages.length
-            )}{" "}
-            of {allImages.length}
-            {isLoading && " • Loading more..."}
-          </p>
           <p className="text-xs mt-1">
             Use mouse wheel, touchpad swipe, or drag to navigate •{" "}
             {imagesPerGroup} images per group
